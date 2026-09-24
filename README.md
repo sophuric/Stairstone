@@ -5,6 +5,8 @@ Stairstone<br/><br/>
 
 ### Allows stairs and slabs to control the directions in which Redstone connects and powers
 
+Mod icon by [axialeaa](https://github.com/axialeaa)
+
 > [!IMPORTANT]
 >
 > This mod will not work with [Lithium](https://modrinth.com/mod/lithium) unless `mixin.block.redstone_wire=false` is set in its config.
