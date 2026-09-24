@@ -2,32 +2,25 @@
   "schemaVersion": 1,
   "id": "${mod_id}",
   "version": "${mod_version}",
-  "name": "sophur's mod template",
-  "description": "An amazing description here",
+  "name": "Stairstone",
+  "description": "Stairs and slabs can control in which directions redstone dust can travel up a block",
   "authors": [
     "sophur"
   ],
   "contact": {
-    "sources": "https://github.com/sophuric/ModTemplate"
+    "sources": "https://github.com/sophuric/Stairstone"
   },
   "license": "MPL-2.0",
-  "icon": "assets/modtemplate/icon.png",
+  "icon": "assets/stairstone/icon.png",
   "environment": "*",
-  "accessWidener": "modtemplate.classtweaker",
+  "accessWidener": "stairstone.classtweaker",
   "entrypoints": {
     "main": [
-      "me.sophur.modtemplate.ModTemplateMain"
-    ],
-    "client": [
-      "me.sophur.modtemplate.client.ModTemplateClient"
+      "me.sophur.stairstone.StairstoneMain"
     ]
   },
   "mixins": [
-    {
-      "environment": "client",
-      "config": "modtemplate.client.mixins.json"
-    },
-    "modtemplate.mixins.json"
+    "stairstone.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",

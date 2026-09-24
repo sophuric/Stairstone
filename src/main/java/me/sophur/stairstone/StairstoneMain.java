@@ -1,16 +1,17 @@
-package me.sophur.modtemplate;
+package me.sophur.stairstone;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 
-public final class ModTemplateMain implements ModInitializer {
-    public static final String MOD_ID = "ModTemplate";
-    public static final String MOD_ID_LOWER = "modtemplate";
+public final class StairstoneMain implements ModInitializer {
+    public static final String MOD_ID = "Stairstone";
+    public static final String MOD_ID_LOWER = "stairstone";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     @Override

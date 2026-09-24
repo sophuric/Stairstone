@@ -18,13 +18,10 @@ loom {
         all {
             jvmArguments.addAll("-XX:+AllowEnhancedClassRedefinition", "-XX:+UseG1GC")
         }
-
-        //remove(runs["server"])
     }
 
     mods.create(modID) {
         sourceSet(sourceSets.getByName("main"))
-        sourceSet(sourceSets.getByName("client"))
     }
 
     accessWidenerPath = file("src/main/resources/$modID.classtweaker")
