@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+shopt -s globstar
+
+if [[ "$#" != 1 ]]; then
+	echo "Usage: rename <new mod name>"
+	exit 1
+fi
+name="$1"
+if ! [[ "$name" =~ ^[a-zA-Z][a-zA-Z0-9]*$ ]]; then
+	echo "Invalid mod name"
+	exit 1
+fi
+
+lowercase="$(printf "%s" "$name" | tr '[:upper:]' '[:lower:]')"
+IFS=''
+for i in src/**/*.{java,json,classtweaker} gradle.properties; do
+	content="$(<"$i")"
+	content="${content//ModTemplate/"$name"}"
+	content="${content//modtemplate/"$lowercase"}"
+	printf "%s" "$content" > "$i"
+	echo "Modified \`${i}'"
+done
+function rename_directories() {
+	from="$1"
+	to="$2"
+	shift
+	shift
+	mapfile -td '' FILES < <(printf "%s\0" "$@" | tac -s '') # loop files backwards, so directories are renamed after their children
+	for i in "${FILES[@]}"; do
+		rename -av -- "$from" "$to" "$i" || true
+	done
+}
+rename_directories ModTemplate "$name" src/**/*
+rename_directories modtemplate "$lowercase" src/**/*
+
+rm rename
+rm -rf .git

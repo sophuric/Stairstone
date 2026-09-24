@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "sophur's mod template",
+  "description": "An amazing description here",
+  "authors": [
+    "sophur"
+  ],
+  "contact": {
+    "sources": "https://github.com/sophuric/ModTemplate"
+  },
+  "license": "MPL-2.0",
+  "icon": "assets/modtemplate/icon.png",
+  "environment": "*",
+  "accessWidener": "modtemplate.classtweaker",
+  "entrypoints": {
+    "main": [
+      "me.sophur.modtemplate.ModTemplateMain"
+    ],
+    "client": [
+      "me.sophur.modtemplate.client.ModTemplateClient"
+    ]
+  },
+  "mixins": [
+    {
+      "environment": "client",
+      "config": "modtemplate.client.mixins.json"
+    },
+    "modtemplate.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
