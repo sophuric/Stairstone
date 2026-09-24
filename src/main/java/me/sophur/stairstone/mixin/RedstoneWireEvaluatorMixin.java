@@ -53,7 +53,7 @@ public class RedstoneWireEvaluatorMixin {
     @WrapOperation(method = "getIncomingWireSignal", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 0))
     private boolean wrapGetIncomingWireSignalDownwardConductiveSupportingBlock(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") @NonNull Direction direction) {
         // redstone signal going DOWN
-        // this wraps the check for a conductive block underneath the
+        // this wraps the check for a conductive block underneath the top redstone dust
         if (StairstoneMain.shouldAllowConnectDown(direction, blockGetter, blockPos, instance))
             return true;
         return original.call(instance, blockGetter, blockPos);
