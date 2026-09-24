@@ -22,9 +22,9 @@ public class RedstoneWireEvaluatorMixin {
     @Definition(id = "level", local = @Local(type = Level.class, name = "level", argsOnly = true))
     @Definition(id = "abovePos", local = @Local(type = BlockPos.class, name = "abovePos"))
     @Expression("?.isRedstoneConductor(level, abovePos)")
-    @WrapOperation(method = "getIncomingWireSignal(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)I", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @WrapOperation(method = "getIncomingWireSignal", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean wrapGetIncomingWireSignalUpward(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") Direction direction) {
-        // redstone signal going UP
+        // redstone signal going DOWN
         if (!StairstoneMain.getCanConnect(direction, blockGetter, blockPos, instance))
             return true;
         return original.call(instance, blockGetter, blockPos);
@@ -35,9 +35,9 @@ public class RedstoneWireEvaluatorMixin {
     @Definition(id = "level", local = @Local(type = Level.class, name = "level", argsOnly = true))
     @Definition(id = "neighborPos", local = @Local(type = BlockPos.class, name = "neighborPos"))
     @Expression("neighborState.isRedstoneConductor(level, neighborPos)")
-    @WrapOperation(method = "getIncomingWireSignal(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)I", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
+    @WrapOperation(method = "getIncomingWireSignal", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
     private boolean wrapGetIncomingWireSignalDownward(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") @NonNull Direction direction) {
-        // redstone signal going DOWN
+        // redstone signal going UP
         if (!StairstoneMain.getCanConnect(direction.getOpposite(), blockGetter, blockPos, instance))
             return true;
         return original.call(instance, blockGetter, blockPos);
