@@ -26,7 +26,7 @@ public class RedstoneWireEvaluatorMixin {
     private boolean wrapGetIncomingWireSignalUpwardBlocking(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") Direction direction) {
         // redstone signal going DOWN
         // this wraps the check for a conductive block preventing the signal from connecting
-        if (!StairstoneMain.getCanConnect(direction, blockGetter, blockPos, instance))
+        if (StairstoneMain.shouldBlockConnection(direction, blockGetter, blockPos, instance))
             return true;
         return original.call(instance, blockGetter, blockPos);
     }
@@ -40,7 +40,7 @@ public class RedstoneWireEvaluatorMixin {
     private boolean wrapGetIncomingWireSignalDownwardBlocking(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") @NonNull Direction direction) {
         // redstone signal going UP
         // this wraps the check for a conductive block preventing the signal from connecting
-        if (!StairstoneMain.getCanConnect(direction.getOpposite(), blockGetter, blockPos, instance))
+        if (StairstoneMain.shouldBlockConnection(direction.getOpposite(), blockGetter, blockPos, instance))
             return true;
         return original.call(instance, blockGetter, blockPos);
     }
@@ -54,7 +54,7 @@ public class RedstoneWireEvaluatorMixin {
     private boolean wrapGetIncomingWireSignalDownwardConductiveSupportingBlock(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") @NonNull Direction direction) {
         // redstone signal going DOWN
         // this wraps the check for a conductive block underneath the
-        if (StairstoneMain.shouldForceAllowConnectDown(direction, blockGetter, blockPos, instance))
+        if (StairstoneMain.shouldAllowConnectDown(direction, blockGetter, blockPos, instance))
             return true;
         return original.call(instance, blockGetter, blockPos);
     }

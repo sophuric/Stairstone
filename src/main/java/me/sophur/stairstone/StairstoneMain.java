@@ -20,27 +20,28 @@ public final class StairstoneMain implements ModInitializer {
     public static final String MOD_ID_LOWER = "stairstone";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final TagKey<Block> REDSTONE_BLOCKING_DIRECTIONAL = TagKey.create(Registries.BLOCK, identifier("redstone_blocking_directional"));
+    public static final TagKey<Block> DIRECTIONAL_REDSTONE_CONNECTS = TagKey.create(Registries.BLOCK, identifier("directional_redstone_connects"));
+    public static final TagKey<Block> DIRECTIONAL_REDSTONE_POWER = TagKey.create(Registries.BLOCK, identifier("directional_redstone_power"));
 
-    public static boolean isDirectional(BlockState blockState) {
-        return blockState.is(REDSTONE_BLOCKING_DIRECTIONAL);
-    }
-
-    public static boolean getCanConnect(Direction upwardDirection, BlockGetter level, BlockPos blockingBlockPos, BlockState blockingBlockState) {
-        if (upwardDirection.getAxis() == Direction.Axis.Y) return true;
-        if (!isDirectional(blockingBlockState)) return true;
+    public static boolean shouldBlockConnection(Direction upwardDirection, BlockGetter level, BlockPos blockingBlockPos, BlockState blockingBlockState) {
+        if (upwardDirection.getAxis() == Direction.Axis.Y) return false;
+        if (!blockingBlockState.is(DIRECTIONAL_REDSTONE_CONNECTS)) return false;
 
         // block connection if bottom face OR side face is solid
         boolean blockedBottom = getIfSolidFace(Direction.DOWN, level, blockingBlockPos, blockingBlockState),
                 blockedSide = getIfSolidFace(upwardDirection, level, blockingBlockPos, blockingBlockState);
-        return !blockedBottom && !blockedSide;
+        return blockedBottom || blockedSide;
     }
 
-    public static boolean shouldForceAllowConnectDown(Direction upwardDirection, BlockGetter level, BlockPos supportingBlockPos, BlockState supportingBlockState) {
+    public static boolean shouldAllowConnectDown(Direction upwardDirection, BlockGetter level, BlockPos supportingBlockPos, BlockState supportingBlockState) {
         if (upwardDirection.getAxis() == Direction.Axis.Y) return false;
-        if (!isDirectional(supportingBlockState)) return false;
+        if (!supportingBlockState.is(DIRECTIONAL_REDSTONE_CONNECTS)) return false;
 
         return getIfSolidFace(upwardDirection.getOpposite(), level, supportingBlockPos, supportingBlockState);
+    }
+
+    public static boolean isDirectionalPower(BlockState blockState) {
+        return blockState.is(DIRECTIONAL_REDSTONE_CONNECTS);
     }
 
     public static boolean getIfSolidFace(Direction direction, BlockGetter level, BlockPos blockPos, BlockState blockState) {

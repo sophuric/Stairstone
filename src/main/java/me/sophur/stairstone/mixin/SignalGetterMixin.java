@@ -32,7 +32,7 @@ public interface SignalGetterMixin extends BlockGetter {
     @WrapMethod(method = "hasNeighborSignal")
     private boolean wrapHasNeighborSignal(BlockPos blockPos, Operation<Boolean> original) {
         var state = this.getBlockState(blockPos);
-        if (!StairstoneMain.isDirectional(state)) return original.call(blockPos);
+        if (!StairstoneMain.isDirectionalPower(state)) return original.call(blockPos);
 
         for (Direction direction : DIRECTIONS) {
             if (!StairstoneMain.getIfSolidFace(direction, this, blockPos, state)) continue;
@@ -45,7 +45,7 @@ public interface SignalGetterMixin extends BlockGetter {
     @WrapMethod(method = "getBestNeighborSignal")
     private int modifyGetBestNeighborSignal(BlockPos pos, Operation<Integer> original) {
         var state = this.getBlockState(pos);
-        if (!StairstoneMain.isDirectional(state)) return original.call(pos);
+        if (!StairstoneMain.isDirectionalPower(state)) return original.call(pos);
 
         int best = 0;
 
@@ -63,7 +63,7 @@ public interface SignalGetterMixin extends BlockGetter {
     @WrapMethod(method = "getDirectSignalTo")
     private int wrapGetDirectSignalTo(BlockPos pos, Operation<Integer> original) {
         var state = this.getBlockState(pos);
-        if (!StairstoneMain.isDirectional(state)) return original.call(pos);
+        if (!StairstoneMain.isDirectionalPower(state)) return original.call(pos);
 
         int best = 0;
 
@@ -84,10 +84,8 @@ public interface SignalGetterMixin extends BlockGetter {
     @Expression("state.isRedstoneConductor(this, pos)")
     @WrapOperation(method = "getSignal", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean wrapGetSignal(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction", argsOnly = true) Direction direction) {
-        if (StairstoneMain.isDirectional(instance)) {
-            return StairstoneMain.getIfSolidFace(direction.getOpposite(),
-                    this, blockPos, instance);
-        }
-        return original.call(instance, blockGetter, blockPos);
+        if (!StairstoneMain.isDirectionalPower(instance)) return original.call(instance, blockGetter, blockPos);
+
+        return StairstoneMain.getIfSolidFace(direction.getOpposite(), this, blockPos, instance);
     }
 }

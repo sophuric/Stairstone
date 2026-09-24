@@ -25,7 +25,7 @@ public class RedStoneWireBlockMixin {
         if (canConnectUp) {
             BlockPos posAbove = pos.above();
             BlockState stateAbove = level.getBlockState(posAbove);
-            canConnectUp = StairstoneMain.getCanConnect(direction, level, posAbove, stateAbove);
+            canConnectUp = !StairstoneMain.shouldBlockConnection(direction, level, posAbove, stateAbove);
         }
 
         return original.call(level, pos, direction, canConnectUp);
@@ -40,7 +40,7 @@ public class RedStoneWireBlockMixin {
     private boolean wrapGetConnectingSide(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(argsOnly = true, name = "direction") Direction direction) {
         // redstone signal going DOWN
 
-        if (!StairstoneMain.getCanConnect(direction.getOpposite(), blockGetter, blockPos, instance)) return true;
+        if (StairstoneMain.shouldBlockConnection(direction.getOpposite(), blockGetter, blockPos, instance)) return true;
         return original.call(instance, blockGetter, blockPos);
     }
 }

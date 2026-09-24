@@ -3,7 +3,7 @@
   "id": "${mod_id}",
   "version": "${mod_version}",
   "name": "Stairstone",
-  "description": "Stairs and slabs can control in which directions redstone dust can travel up a block",
+  "description": "Stairs and slabs can control the directions in which redstone connects",
   "authors": [
     "sophur"
   ],
