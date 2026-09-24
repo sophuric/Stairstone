@@ -35,7 +35,7 @@ public interface SignalGetterMixin extends BlockGetter {
         if (!StairstoneMain.isDirectional(state)) return original.call(blockPos);
 
         for (Direction direction : DIRECTIONS) {
-            if (!StairstoneMain.getIfPoweringBlockSide(direction, this, blockPos, state)) continue;
+            if (!StairstoneMain.getIfSolidFace(direction, this, blockPos, state)) continue;
             if (getSignal(blockPos.relative(direction), direction) > 0) return true;
         }
 
@@ -50,7 +50,7 @@ public interface SignalGetterMixin extends BlockGetter {
         int best = 0;
 
         for (Direction direction : DIRECTIONS) {
-            if (!StairstoneMain.getIfPoweringBlockSide(direction, this, pos, state)) continue;
+            if (!StairstoneMain.getIfSolidFace(direction, this, pos, state)) continue;
 
             int signal = getSignal(pos.relative(direction), direction);
             if (signal >= 15) return 15;
@@ -68,7 +68,7 @@ public interface SignalGetterMixin extends BlockGetter {
         int best = 0;
 
         for (Direction direction : DIRECTIONS) {
-            if (!StairstoneMain.getIfPoweringBlockSide(direction, this, pos, state)) continue;
+            if (!StairstoneMain.getIfSolidFace(direction, this, pos, state)) continue;
 
             int signal = getDirectSignal(pos.relative(direction), direction);
             if (signal >= 15) return 15;
@@ -85,7 +85,7 @@ public interface SignalGetterMixin extends BlockGetter {
     @WrapOperation(method = "getSignal", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean wrapGetSignal(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction", argsOnly = true) Direction direction) {
         if (StairstoneMain.isDirectional(instance)) {
-            return StairstoneMain.getIfPoweringBlockSide(direction.getOpposite(),
+            return StairstoneMain.getIfSolidFace(direction.getOpposite(),
                     this, blockPos, instance);
         }
         return original.call(instance, blockGetter, blockPos);

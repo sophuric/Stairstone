@@ -26,17 +26,25 @@ public final class StairstoneMain implements ModInitializer {
         return blockState.is(REDSTONE_BLOCKING_DIRECTIONAL);
     }
 
-    public static boolean getCanConnect(Direction upwardDirection, BlockGetter level, BlockPos separatingBlockPos, BlockState separatingBlockState) {
+    public static boolean getCanConnect(Direction upwardDirection, BlockGetter level, BlockPos blockingBlockPos, BlockState blockingBlockState) {
         if (upwardDirection.getAxis() == Direction.Axis.Y) return true;
-        if (!isDirectional(separatingBlockState)) return true;
+        if (!isDirectional(blockingBlockState)) return true;
 
         // block connection if bottom face OR side face is solid
-        boolean blockedBottom = separatingBlockState.isFaceSturdy(level, separatingBlockPos, Direction.DOWN, SupportType.FULL),
-                blockedSide = separatingBlockState.isFaceSturdy(level, separatingBlockPos, upwardDirection, SupportType.FULL);
+        boolean blockedBottom = getIfSolidFace(Direction.DOWN, level, blockingBlockPos, blockingBlockState),
+                blockedSide = getIfSolidFace(upwardDirection, level, blockingBlockPos, blockingBlockState);
         return !blockedBottom && !blockedSide;
     }
 
-    public static boolean getIfPoweringBlockSide(Direction direction, BlockGetter level, BlockPos blockPos, BlockState blockState) {
+    public static boolean shouldForceAllowConnectDown(Direction upwardDirection, BlockGetter level, BlockPos supportingBlockPos, BlockState supportingBlockState) {
+        if (upwardDirection.getAxis() == Direction.Axis.Y) return false;
+        if (!isDirectional(supportingBlockState)) return false;
+
+        return getIfSolidFace(upwardDirection.getOpposite(), level, supportingBlockPos, supportingBlockState);
+    }
+
+    public static boolean getIfSolidFace(Direction direction, BlockGetter level, BlockPos blockPos, BlockState blockState) {
+        // wrapper method if I ever want to change how this is implemented
         return blockState.isFaceSturdy(level, blockPos, direction, SupportType.FULL);
     }
 
