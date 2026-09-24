@@ -22,14 +22,22 @@ public final class StairstoneMain implements ModInitializer {
 
     public static final TagKey<Block> REDSTONE_BLOCKING_DIRECTIONAL = TagKey.create(Registries.BLOCK, identifier("redstone_blocking_directional"));
 
+    public static boolean isDirectional(BlockState blockState) {
+        return blockState.is(REDSTONE_BLOCKING_DIRECTIONAL);
+    }
+
     public static boolean getCanConnect(Direction upwardDirection, BlockGetter level, BlockPos separatingBlockPos, BlockState separatingBlockState) {
         if (upwardDirection.getAxis() == Direction.Axis.Y) return true;
-        if (!separatingBlockState.is(REDSTONE_BLOCKING_DIRECTIONAL)) return true;
+        if (!isDirectional(separatingBlockState)) return true;
 
         // block connection if bottom face OR side face is solid
         boolean blockedBottom = separatingBlockState.isFaceSturdy(level, separatingBlockPos, Direction.DOWN, SupportType.FULL),
                 blockedSide = separatingBlockState.isFaceSturdy(level, separatingBlockPos, upwardDirection, SupportType.FULL);
         return !blockedBottom && !blockedSide;
+    }
+
+    public static boolean getIfPoweringBlockSide(Direction direction, BlockGetter level, BlockPos blockPos, BlockState blockState) {
+        return blockState.isFaceSturdy(level, blockPos, direction, SupportType.FULL);
     }
 
     @Override

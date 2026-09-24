@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(RedStoneWireBlock.class)
 public class RedStoneWireBlockMixin {
     @WrapMethod(method = "getConnectingSide(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Z)Lnet/minecraft/world/level/block/state/properties/RedstoneSide;")
-    public RedstoneSide wrapGetConnectingSide(BlockGetter level, BlockPos pos, Direction direction, boolean canConnectUp, Operation<RedstoneSide> original) {
+    private RedstoneSide wrapGetConnectingSide(BlockGetter level, BlockPos pos, Direction direction, boolean canConnectUp, Operation<RedstoneSide> original) {
         // redstone signal going UP
 
         if (canConnectUp) {
@@ -37,7 +37,7 @@ public class RedStoneWireBlockMixin {
     @Definition(id = "relativePos", local = @Local(type = BlockPos.class, name = "relativePos"))
     @Expression("relativeState.isRedstoneConductor(level,relativePos)")
     @WrapOperation(method = "getConnectingSide(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Z)Lnet/minecraft/world/level/block/state/properties/RedstoneSide;", at = @At("MIXINEXTRAS:EXPRESSION"))
-    public boolean wrapGetConnectingSide(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(argsOnly = true, name = "direction") Direction direction) {
+    private boolean wrapGetConnectingSide(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(argsOnly = true, name = "direction") Direction direction) {
         // redstone signal going DOWN
 
         if (!StairstoneMain.getCanConnect(direction.getOpposite(), blockGetter, blockPos, instance)) return true;

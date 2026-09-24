@@ -23,7 +23,7 @@ public class RedstoneWireEvaluatorMixin {
     @Definition(id = "abovePos", local = @Local(type = BlockPos.class, name = "abovePos"))
     @Expression("?.isRedstoneConductor(level, abovePos)")
     @WrapOperation(method = "getIncomingWireSignal(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)I", at = @At("MIXINEXTRAS:EXPRESSION"))
-    public boolean wrapGetIncomingWireSignalUpward(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") Direction direction) {
+    private boolean wrapGetIncomingWireSignalUpward(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") Direction direction) {
         // redstone signal going UP
         if (!StairstoneMain.getCanConnect(direction, blockGetter, blockPos, instance))
             return true;
@@ -36,7 +36,7 @@ public class RedstoneWireEvaluatorMixin {
     @Definition(id = "neighborPos", local = @Local(type = BlockPos.class, name = "neighborPos"))
     @Expression("neighborState.isRedstoneConductor(level, neighborPos)")
     @WrapOperation(method = "getIncomingWireSignal(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)I", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
-    public boolean wrapGetIncomingWireSignalDownward(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") @NonNull Direction direction) {
+    private boolean wrapGetIncomingWireSignalDownward(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") @NonNull Direction direction) {
         // redstone signal going DOWN
         if (!StairstoneMain.getCanConnect(direction.getOpposite(), blockGetter, blockPos, instance))
             return true;
