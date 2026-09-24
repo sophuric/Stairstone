@@ -41,16 +41,17 @@ A Redstone signal running into a stair block will only power the sides that have
 >
 > Changing the shape of a stair block using a neighbouring stair block does NOT send an update to the powered blocks, or the blocks to be powered. This is a limitation of the mod, but it also adds another way to have blocks in a BUD'ed state, i.e. they are unpowered/powered when they receive the next neighbour update.
 
+Screenshots:
 <details>
 <summary>Powering a lamp</summary>
 
-![A Redstone line running into a stair block. The stair block has a full face on the top and in the direction facing the Redstone wire. There are three Redstone lamps surrounding the stair block, and only the one on top is powered.](screenshots/lamps_directional.png)
-![A Redstone line running into a corner stair block. The stair block has a full face on the top, in the direction facing the Redstone wire, and on the right side. There are two powered Redstone lamps surrounding the stair block, both are on the side of the stair block with the full face.](screenshots/lamps_directional_2.png)
+![A Redstone line running into a solid face of an upward stair block, which powers the Redstone lamp above it.](screenshots/lamps_directional.png)
+![A Redstone line running into a solid face of an upward corner stair block, which powers the Redstone lamp above it and the one beside it. The lamps are on the solid faces of the stair block.](screenshots/lamps_directional_2.png)
 </details>
 <details>
 <summary>Powering a Redstone line</summary>
 
-![A Redstone line running into the front side of a corner stair block. The stair block has a full face on the top, front, and right side. There is a Redstone line on top, and the two sides of the stair block. Only the Redstone lines on the top and right side are powered. The top Redstone line is powering a Redstone lamp](screenshots/repeater_wire_directional.png)
+![A Redstone repeater running into a solid face of an upward corner stair block, which powers the Redstone line above and to the right of it. The Redstone line to the left of it is left unpowered, because there is no solid face on that side of the stair block. The above Redstone line is then connected to a Redstone lamp.](screenshots/repeater_wire_directional.png)
 </details>
 
 ## Block tag
