@@ -55,6 +55,11 @@ Screenshots:
 
 ![A Redstone repeater running into a solid face of an upward corner stair block, which powers the Redstone line above and to the right of it. The Redstone line to the left of it is left unpowered, because there is no solid face on that side of the stair block. The above Redstone line is then connected to a Redstone lamp.](screenshots/repeater_wire_directional.png)
 </details>
+<details>
+<summary>Torch inverter</summary>
+
+![A Redstone wire powers a Redstone torch from the block below, which inverts it and powers the stair block above the torch, powering the Redstone lamp. If this stair block was a full block, it would cause a torch burnout.](screenshots/torch_inverter.png)
+</details>
 
 ## Block tag
 Mods and data packs can change which blocks affect Redstone using the following block tags, or clear the tag to disable it entirely:
