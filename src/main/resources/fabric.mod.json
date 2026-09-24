@@ -3,15 +3,29 @@
   "id": "${mod_id}",
   "version": "${mod_version}",
   "name": "Stairstone",
-  "description": "Stairs and slabs can control the directions in which redstone connects",
+  "description": "Allows stairs and slabs to control the directions in which Redstone connects and powers",
   "authors": [
-    "sophur"
+    {
+      "name": "sophur",
+      "contact": {
+        "homepage": "https://github.com/sophuric"
+      }
+    }
+  ],
+  "contributors": [
+    {
+      "name": "axialeaa (Mod Icon)",
+      "contact": {
+        "homepage": "https://github.com/axialeaa"
+      }
+    }
   ],
   "contact": {
-    "sources": "https://github.com/sophuric/Stairstone"
+    "sources": "https://github.com/sophuric/Stairstone",
+    "issues": "https://github.com/sophuric/Stairstone/issues"
   },
   "license": "MPL-2.0",
-  "icon": "assets/stairstone/icon.png",
+  "icon": "assets/stairstone/icon256.png",
   "environment": "*",
   "accessWidener": "stairstone.classtweaker",
   "entrypoints": {
@@ -27,7 +41,7 @@
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
   },
-  "breaks": {
+  "conflicts": {
     "lithium": "*"
   }
 }
