@@ -21,6 +21,7 @@
     }
   ],
   "contact": {
+    "homepage": "https://modrinth.com/project/stairstone",
     "sources": "https://github.com/sophuric/Stairstone",
     "issues": "https://github.com/sophuric/Stairstone/issues"
   },

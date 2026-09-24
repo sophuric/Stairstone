@@ -1,6 +1,6 @@
 <h2 align="center">
 Stairstone<br/><br/>
-<img width="160" height="160" src="src/main/resources/assets/stairstone/icon320.png"/>
+<img width="160" height="160" alt="Stairstone icon" src="src/main/resources/assets/stairstone/icon320.png"/>
 </h2>
 
 ### Allows stairs and slabs to control the directions in which Redstone connects and powers

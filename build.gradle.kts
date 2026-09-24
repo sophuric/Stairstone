@@ -85,6 +85,6 @@ modrinth {
     loaders.add("fabric")
     dependencies {
         required.project("fabric-api")
+        incompatible.project("lithium")
     }
-    syncBodyFrom = rootProject.file("README.md").readText()
 }
