@@ -1,0 +1,45 @@
+package me.sophur.stairstone.mixin;
+
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import me.sophur.stairstone.StairstoneMain;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.RedstoneWireEvaluator;
+import org.jspecify.annotations.NonNull;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+
+@Mixin(RedstoneWireEvaluator.class)
+public class RedstoneWireEvaluatorMixin {
+    @Definition(id = "isRedstoneConductor", method = "Lnet/minecraft/world/level/block/state/BlockState;isRedstoneConductor(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z")
+    @Definition(id = "level", local = @Local(type = Level.class, name = "level", argsOnly = true))
+    @Definition(id = "abovePos", local = @Local(type = BlockPos.class, name = "abovePos"))
+    @Expression("?.isRedstoneConductor(level, abovePos)")
+    @WrapOperation(method = "getIncomingWireSignal(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)I", at = @At("MIXINEXTRAS:EXPRESSION"))
+    public boolean wrapGetIncomingWireSignalUpward(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") Direction direction) {
+        // redstone signal going UP
+        if (!StairstoneMain.getCanConnect(direction, blockGetter, blockPos, instance))
+            return true;
+        return original.call(instance, blockGetter, blockPos);
+    }
+
+    @Definition(id = "isRedstoneConductor", method = "Lnet/minecraft/world/level/block/state/BlockState;isRedstoneConductor(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z")
+    @Definition(id = "neighborState", local = @Local(type = BlockState.class, name = "neighborState"))
+    @Definition(id = "level", local = @Local(type = Level.class, name = "level", argsOnly = true))
+    @Definition(id = "neighborPos", local = @Local(type = BlockPos.class, name = "neighborPos"))
+    @Expression("neighborState.isRedstoneConductor(level, neighborPos)")
+    @WrapOperation(method = "getIncomingWireSignal(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)I", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
+    public boolean wrapGetIncomingWireSignalDownward(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction") @NonNull Direction direction) {
+        // redstone signal going DOWN
+        if (!StairstoneMain.getCanConnect(direction.getOpposite(), blockGetter, blockPos, instance))
+            return true;
+        return original.call(instance, blockGetter, blockPos);
+    }
+}

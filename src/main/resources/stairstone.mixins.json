@@ -3,8 +3,12 @@
   "minVersion": "0.8",
   "package": "me.sophur.stairstone.mixin",
   "compatibilityLevel": "JAVA_25",
+  "mixinextras": {
+    "minVersion": "0.5.5"
+  },
   "mixins": [
-    "RedStoneWireBlockMixin"
+    "RedStoneWireBlockMixin",
+    "RedstoneWireEvaluatorMixin"
   ],
   "injectors": {
     "defaultRequire": 1
