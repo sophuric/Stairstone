@@ -27,6 +27,11 @@ Screenshots:
 
 ![A Redstone line going up a block in one direction, the other direction is blocked by a stair block](screenshots/blocking_with_stair.png)
 </details>
+<details>
+<summary>Adjacent Redstone towers</summary>
+
+![Stair Redstone blocking allows two adjacent Redstone towers to be placed next to each other.](screenshots/adjacent_towers.png)
+</details>
 
 ## Directional downwards Redstone
 Redstone can now travel down stairs on the sides which have full faces
@@ -59,6 +64,11 @@ Screenshots:
 <summary>Torch inverter</summary>
 
 ![A Redstone wire powers a Redstone torch from the block below, which inverts it and powers the stair block above the torch, powering the Redstone lamp. If this stair block was a full block, it would cause a torch burnout.](screenshots/torch_inverter.png)
+</details>
+<details>
+<summary>Power tower</summary>
+
+![A Redstone tower that powers a wall of trapdoors. Each even trapdoor is powered directly by the wire, and each odd one is powered via the stair block.](screenshots/power_tower.png)
 </details>
 
 ## Block tag
