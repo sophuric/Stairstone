@@ -42,7 +42,9 @@
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
   },
-  "conflicts": {
-    "lithium": "*"
+  "custom": {
+    "lithium:options": {
+      "mixin.block.redstone_wire": false
+    }
   }
 }

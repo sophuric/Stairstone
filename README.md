@@ -9,8 +9,6 @@ Mod icon by [axialeaa](https://github.com/axialeaa)
 
 > [!IMPORTANT]
 >
-> This mod will not work with [Lithium](https://modrinth.com/mod/lithium) unless `mixin.block.redstone_wire=false` is set in its config.
->
 > This mod may not work with [Carpet](https://modrinth.com/mod/carpet), any Carpet addons, or any other mod that mixins to Redstone behaviour.
 
 ## Directional upwards Redstone blocking
