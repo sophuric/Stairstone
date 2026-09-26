@@ -11,7 +11,7 @@ Mod icon by [axialeaa](https://github.com/axialeaa)
 >
 > This mod may not work with [Carpet](https://modrinth.com/mod/carpet), any Carpet addons, or any other mod that mixins to Redstone behaviour.
 
-## Directional upwards Redstone blocking
+## Directional Redstone blocking
 Slabs and stairs will now block Redstone going up if the bottom or side face in that direction is fully covered
 
 Screenshots:
