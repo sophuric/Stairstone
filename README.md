@@ -71,5 +71,7 @@ Screenshots:
 
 ## Block tag
 Mods and data packs can change which blocks affect Redstone using the following block tags, or clear the tag to disable it entirely:
-- `stairstone:directional_redstone_connects` (directional blocking and downwards)
+- `stairstone:directional_redstone_connects` (directional blocking and downwards Redstone)
 - `stairstone:directional_redstone_power` (directional powering)
+
+Faces of the block are checked for a full face. Redstone is blocked if the bottom face OR the side face is a full face; Redstone is allowed to travel downwards if the side face is a full face; and a Redstone component is powered if both the side facing the component, and the side facing the power source are full faces.
