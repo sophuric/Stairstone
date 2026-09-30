@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "${mod_id}",
   "version": "${mod_version}",
-  "name": "Stairstone",
+  "name": "${mod_name}",
   "description": "Allows stairs and slabs to control the directions in which Redstone connects and powers",
   "authors": [
     {
@@ -22,8 +22,8 @@
   ],
   "contact": {
     "homepage": "https://modrinth.com/project/stairstone",
-    "sources": "https://github.com/sophuric/Stairstone",
-    "issues": "https://github.com/sophuric/Stairstone/issues"
+    "sources": "https://github.com/${repo_github}",
+    "issues": "https://github.com/${repo_github}/issues"
   },
   "license": "MPL-2.0",
   "icon": "assets/stairstone/icon256.png",
