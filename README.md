@@ -5,11 +5,11 @@ Stairstone<br/><br/>
 
 ### Allows stairs and slabs to control the directions in which Redstone connects and powers
 
-Mod icon by [axialeaa](https://github.com/axialeaa)
+Thanks to [axialeaa](https://github.com/axialeaa) for creating the mod icon, playtesting, and ideating :3
 
 > [!IMPORTANT]
 >
-> This mod may not work with [Carpet](https://modrinth.com/mod/carpet), any Carpet addons, or any other mod that mixins to Redstone behaviour.
+> This mod may not work with [Carpet](https://modrinth.com/mod/carpet), any Carpet addons, or any other mod that modifies Redstone behaviour.
 
 ## Directional Redstone blocking
 Slabs and stairs will now block Redstone going up if the bottom or side face in that direction is fully covered
