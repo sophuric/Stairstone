@@ -3,6 +3,9 @@
   "values": [
     "#minecraft:stairs",
     "#minecraft:slabs",
-    "#enchanted-vertical-slabs:slabs"
+    {
+      "id": "#enchanted-vertical-slabs:slabs",
+      "required": false
+    }
   ]
 }
