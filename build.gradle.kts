@@ -93,6 +93,8 @@ publishMods {
         projectId = property("modrinth.id").toString()
         minecraftVersions.add(libs.versions.minecraft.get())
 
+        incompatible { id = "r0v8vy1s" }
+
         environment = SERVER_ONLY_CLIENT_OPTIONAL
 
         requires("fabric-api")

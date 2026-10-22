@@ -37,6 +37,9 @@
   "mixins": [
     "stairstone.mixins.json"
   ],
+  "breaks": {
+    "alternate-current": "*"
+  },
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",
     "fabric-api": "*",
