@@ -46,6 +46,10 @@ A Redstone signal running into a stair block will only power the sides that have
 >
 > Changing the shape of a stair block using a neighbouring stair block does NOT send an update to the powered blocks, or the blocks to be powered. This is a limitation of the mod, but it also adds another way to have blocks in a BUD'ed state, i.e. they are unpowered/powered when they receive the next neighbour update.
 
+> [!NOTE]
+>
+> This mod is only required on the server, but recommended on the client too. Players without the mod may briefly see the wrong block state when updating a redstone wire, before the server can send the correct block state to the client.
+
 Screenshots:
 <details>
 <summary>Powering a lamp</summary>
