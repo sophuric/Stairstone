@@ -9,7 +9,7 @@ Thanks to [axialeaa](https://github.com/axialeaa) for creating the mod icon, pla
 
 > [!IMPORTANT]
 >
-> This mod may not work with [Carpet](https://modrinth.com/mod/carpet), any Carpet addons, or any other mod that modifies Redstone behaviour.
+> This mod may not work with [Carpet](https://modrinth.com/mod/carpet), any Carpet addons, any other mod that modifies Redstone behaviour, or Experimental Redstone changes.
 
 > [!NOTE]
 >
