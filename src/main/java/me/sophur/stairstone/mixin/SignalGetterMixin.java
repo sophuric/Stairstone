@@ -6,7 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import me.sophur.stairstone.StairstoneMain;
+import me.sophur.stairstone.api.v2.StairstoneBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
+import static me.sophur.stairstone.api.v2.StairstoneBehaviour.POWER_DEFAULT_VANILLA;
 import static net.minecraft.world.level.SignalGetter.DIRECTIONS;
 
 @Mixin(SignalGetter.class)
@@ -32,10 +33,11 @@ public interface SignalGetterMixin extends BlockGetter {
     @WrapMethod(method = "hasNeighborSignal")
     private boolean wrapHasNeighborSignal(BlockPos blockPos, Operation<Boolean> original) {
         var state = this.getBlockState(blockPos);
-        if (!StairstoneMain.isDirectionalPower(state)) return original.call(blockPos);
+        var behaviour = StairstoneBehaviour.getPowerBehaviour(state.getBlock());
+        if (behaviour == POWER_DEFAULT_VANILLA) return original.call(blockPos);
 
         for (Direction direction : DIRECTIONS) {
-            if (!StairstoneMain.getIfSolidFace(direction, this, blockPos, state)) continue;
+            if (!behaviour.isSolidFaceForRedstonePower(direction, this, blockPos, state)) continue;
             if (getSignal(blockPos.relative(direction), direction) > 0) return true;
         }
 
@@ -45,12 +47,13 @@ public interface SignalGetterMixin extends BlockGetter {
     @WrapMethod(method = "getBestNeighborSignal")
     private int modifyGetBestNeighborSignal(BlockPos pos, Operation<Integer> original) {
         var state = this.getBlockState(pos);
-        if (!StairstoneMain.isDirectionalPower(state)) return original.call(pos);
+        var behaviour = StairstoneBehaviour.getPowerBehaviour(state.getBlock());
+        if (behaviour == POWER_DEFAULT_VANILLA) return original.call(pos);
 
         int best = 0;
 
         for (Direction direction : DIRECTIONS) {
-            if (!StairstoneMain.getIfSolidFace(direction, this, pos, state)) continue;
+            if (!behaviour.isSolidFaceForRedstonePower(direction, this, pos, state)) continue;
 
             int signal = getSignal(pos.relative(direction), direction);
             if (signal >= 15) return 15;
@@ -63,12 +66,13 @@ public interface SignalGetterMixin extends BlockGetter {
     @WrapMethod(method = "getDirectSignalTo")
     private int wrapGetDirectSignalTo(BlockPos pos, Operation<Integer> original) {
         var state = this.getBlockState(pos);
-        if (!StairstoneMain.isDirectionalPower(state)) return original.call(pos);
+        var behaviour = StairstoneBehaviour.getPowerBehaviour(state.getBlock());
+        if (behaviour == POWER_DEFAULT_VANILLA) return original.call(pos);
 
         int best = 0;
 
         for (Direction direction : DIRECTIONS) {
-            if (!StairstoneMain.getIfSolidFace(direction, this, pos, state)) continue;
+            if (!behaviour.isSolidFaceForRedstonePower(direction, this, pos, state)) continue;
 
             int signal = getDirectSignal(pos.relative(direction), direction);
             if (signal >= 15) return 15;
@@ -83,9 +87,10 @@ public interface SignalGetterMixin extends BlockGetter {
     @Definition(id = "pos", local = @Local(type = BlockPos.class, name = "pos", argsOnly = true))
     @Expression("state.isRedstoneConductor(this, pos)")
     @WrapOperation(method = "getSignal", at = @At("MIXINEXTRAS:EXPRESSION"))
-    private boolean wrapGetSignal(BlockState instance, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction", argsOnly = true) Direction direction) {
-        if (!StairstoneMain.isDirectionalPower(instance)) return original.call(instance, blockGetter, blockPos);
+    private boolean wrapGetSignal(BlockState state, BlockGetter blockGetter, BlockPos blockPos, Operation<Boolean> original, @Local(name = "direction", argsOnly = true) Direction direction) {
+        var behaviour = StairstoneBehaviour.getPowerBehaviour(state.getBlock());
+        if (behaviour == POWER_DEFAULT_VANILLA) return original.call(state, blockGetter, blockPos);
 
-        return StairstoneMain.getIfSolidFace(direction.getOpposite(), this, blockPos, instance);
+        return behaviour.isSolidFaceForRedstonePower(direction.getOpposite(), this, blockPos, state);
     }
 }

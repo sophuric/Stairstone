@@ -31,7 +31,7 @@
   "accessWidener": "stairstone.classtweaker",
   "entrypoints": {
     "main": [
-      "me.sophur.stairstone.StairstoneMain"
+      "me.sophur.stairstone.impl.StairstoneMain"
     ]
   },
   "mixins": [

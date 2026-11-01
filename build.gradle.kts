@@ -2,6 +2,7 @@ plugins {
     java
     alias(libs.plugins.fabric.loom)
     alias(libs.plugins.modPublishPlugin)
+    `maven-publish`
 }
 
 val modId = property("mod.id").toString()
@@ -133,5 +134,29 @@ publishMods {
         repository = githubRepo
         tagName = version
         commitish = providers.environmentVariable("GIT_BRANCH")
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "SpiritStudiosReleases"
+            url = uri("https://maven.spiritstudios.dev/releases")
+            credentials(PasswordCredentials::class)
+        }
+
+        maven {
+            name = "SpiritStudiosSnapshots"
+            url = uri("https://maven.spiritstudios.dev/snapshots")
+            credentials(PasswordCredentials::class)
+        }
+
+        mavenLocal()
     }
 }

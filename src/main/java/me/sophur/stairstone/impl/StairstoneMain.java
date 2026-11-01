@@ -1,14 +1,12 @@
-package me.sophur.stairstone;
+package me.sophur.stairstone.impl;
 
+import me.sophur.stairstone.api.v2.StairstoneBehaviour;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,33 +18,23 @@ public final class StairstoneMain implements ModInitializer {
     public static final String MOD_ID_LOWER = "stairstone";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final TagKey<Block> DIRECTIONAL_REDSTONE_CONNECTS = TagKey.create(Registries.BLOCK, identifier("directional_redstone_connects"));
-    public static final TagKey<Block> DIRECTIONAL_REDSTONE_POWER = TagKey.create(Registries.BLOCK, identifier("directional_redstone_power"));
-
     public static boolean shouldBlockConnection(Direction upwardDirection, BlockGetter level, BlockPos blockingBlockPos, BlockState blockingBlockState) {
         if (upwardDirection.getAxis() == Direction.Axis.Y) return false;
-        if (!blockingBlockState.is(DIRECTIONAL_REDSTONE_CONNECTS)) return false;
+
+        var behaviour = StairstoneBehaviour.getConnectivityBehaviour(blockingBlockState.getBlock());
 
         // block connection if bottom face OR side face is solid
-        boolean blockedBottom = getIfSolidFace(Direction.DOWN, level, blockingBlockPos, blockingBlockState),
-                blockedSide = getIfSolidFace(upwardDirection, level, blockingBlockPos, blockingBlockState);
+        boolean blockedBottom = behaviour.isSolidFaceForRedstoneWireConnectivity(Direction.DOWN, level, blockingBlockPos, blockingBlockState),
+                blockedSide = behaviour.isSolidFaceForRedstoneWireConnectivity(upwardDirection, level, blockingBlockPos, blockingBlockState);
         return blockedBottom || blockedSide;
     }
 
     public static boolean shouldAllowConnectDown(Direction upwardDirection, BlockGetter level, BlockPos supportingBlockPos, BlockState supportingBlockState) {
         if (upwardDirection.getAxis() == Direction.Axis.Y) return false;
-        if (!supportingBlockState.is(DIRECTIONAL_REDSTONE_CONNECTS)) return false;
 
-        return getIfSolidFace(upwardDirection.getOpposite(), level, supportingBlockPos, supportingBlockState);
-    }
+        var behaviour = StairstoneBehaviour.getConnectivityBehaviour(supportingBlockState.getBlock());
 
-    public static boolean isDirectionalPower(BlockState blockState) {
-        return blockState.is(DIRECTIONAL_REDSTONE_CONNECTS);
-    }
-
-    public static boolean getIfSolidFace(Direction direction, BlockGetter level, BlockPos blockPos, BlockState blockState) {
-        // wrapper method if I ever want to change how this is implemented
-        return blockState.isFaceSturdy(level, blockPos, direction, SupportType.FULL);
+        return behaviour.isSolidFaceForRedstoneWireConnectivity(upwardDirection.getOpposite(), level, supportingBlockPos, supportingBlockState);
     }
 
     @Override

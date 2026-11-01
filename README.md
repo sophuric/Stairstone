@@ -15,7 +15,7 @@ Thanks to [axialeaa](https://github.com/axialeaa) for creating the mod icon, pla
 >
 > This mod is only required on the server, but recommended on the client too. Players without the mod may briefly see the wrong block state when updating a redstone wire, before the server can send the correct block state to the client.
 
-## Directional Redstone blocking
+## Redstone blocking
 Slabs and stairs will now block Redstone going up if the bottom or side face in that direction is fully covered
 
 Screenshots:
@@ -35,7 +35,7 @@ Screenshots:
 ![Stair Redstone blocking allows two adjacent Redstone towers to be placed next to each other.](screenshots/adjacent_towers.png)
 </details>
 
-## Directional downwards Redstone
+## Redstone going downwards
 Redstone can now travel down stairs on the sides which have full faces
 <details>
 <summary>Screenshot</summary>
@@ -73,9 +73,53 @@ Screenshots:
 ![A Redstone tower that powers a wall of trapdoors. Each even trapdoor is powered directly by the wire, and each odd one is powered via the stair block.](screenshots/power_tower.png)
 </details>
 
-## Block tag
-Mods and data packs can change which blocks affect Redstone using the following block tags, or clear the tag to disable it entirely:
+## Mods and data packs
+### Block tags
+Mods and data packs can change which blocks affect Redstone connectivity and powering using the following block tags:
 - `stairstone:directional_redstone_connects` (directional blocking and downwards Redstone)
 - `stairstone:directional_redstone_power` (directional powering)
 
-Faces of the block are checked for a full face. Redstone is blocked if the bottom face OR the side face is a full face; Redstone is allowed to travel downwards if the side face is a full face; and a Redstone component is powered if both the side facing the component, and the side facing the power source are full faces.
+For blocks with these tags, faces of the block are checked for a full face. Redstone is blocked if the bottom face OR the side face is a full face; Redstone is allowed to travel downwards if the side face is a full face; and a Redstone component is powered if both the side facing the component, and the side facing the power source are full faces.
+
+### Mods
+Other mods can specify custom behaviour for Redstone connectivity and powering. Specifically, which sides are treated as a "full face" for the above paragraph.
+
+1. Add the [Spirit Studios Maven repository](https://maven.spiritstudios.dev/#/releases)
+
+    - `build.gradle`
+        ```groovy
+        repositories {
+            exclusiveContent {
+                forRepository { maven { url = "https://maven.spiritstudios.dev/releases"; name = "Spirit Studios" } }
+                filter { includeGroup("me.sophur.stairstone") }
+            }
+        }
+        ```
+
+    - `build.gradle.kts`
+        ```kotlin
+        repositories {
+            exclusiveContent {
+                forRepository { maven("https://maven.spiritstudios.dev/releases") { name = "Spirit Studios" } }
+                filter { includeGroup("me.sophur.stairstone") }
+            }
+        }
+        ```
+
+2. Add Stairstone as a dependency
+    ```kotlin
+    dependencies {
+        implementation("me.sophur.stairstone:stairstone:<version>")
+    }
+    ```
+3. Import `me.sophur.stairstone.api.v2.StairstoneBehaviour` and make your `Block` implement one or more of its interfaces:
+    - `StairstoneBehaviour.RedstonePower`
+    - `StairstoneBehaviour.RedstoneWireConnectivity`
+
+    Your `Block` should also be non-conductive ("transparent")
+    ```java
+    public MyBlock(Properties properties) {
+        properties = properties.isRedstoneConductor(Blocks::never);
+        super(properties);
+    }
+    ```
