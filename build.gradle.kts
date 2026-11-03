@@ -5,9 +5,9 @@ plugins {
     `maven-publish`
 }
 
-val modId = property("mod.id").toString()
-val modName = property("mod.name").toString()
-val modGroup = property("mod.group").toString()
+val modId = "stairstone"
+val modName = "Stairstone"
+val modGroup = "me.sophur"
 val modVersion = property("mod.version").toString()
 
 val githubRepo = property("repo.github").toString()
