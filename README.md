@@ -91,7 +91,7 @@ Other mods can specify custom behaviour for Redstone connectivity and powering. 
         repositories {
             exclusiveContent {
                 forRepository { maven { url = "https://maven.spiritstudios.dev/releases"; name = "Spirit Studios" } }
-                filter { includeGroup("me.sophur.stairstone") }
+                filter { includeGroup("me.sophur") }
             }
         }
         ```
@@ -101,7 +101,7 @@ Other mods can specify custom behaviour for Redstone connectivity and powering. 
         repositories {
             exclusiveContent {
                 forRepository { maven("https://maven.spiritstudios.dev/releases") { name = "Spirit Studios" } }
-                filter { includeGroup("me.sophur.stairstone") }
+                filter { includeGroup("me.sophur") }
             }
         }
         ```
@@ -109,7 +109,7 @@ Other mods can specify custom behaviour for Redstone connectivity and powering. 
 2. Add Stairstone as a dependency
     ```kotlin
     dependencies {
-        implementation("me.sophur.stairstone:stairstone:<version>")
+        implementation("me.sophur:stairstone:<version>")
     }
     ```
 3. Import `me.sophur.stairstone.api.v2.StairstoneBehaviour` and make your `Block` implement one or more of its interfaces:
