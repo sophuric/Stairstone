@@ -84,7 +84,7 @@ For blocks with these tags, faces of the block are checked for a full face. Reds
 ### Mods
 Other mods can specify custom behaviour for Redstone connectivity and powering. Specifically, which sides are treated as a "full face" for the above paragraph.
 
-1. Add the [Spirit Studios Maven repository](https://maven.spiritstudios.dev/#/releases)
+1. Add the [Spirit Studios Maven repository](https://maven.spiritstudios.dev/#/releases):
 
     - `build.gradle`
         ```groovy
@@ -106,7 +106,7 @@ Other mods can specify custom behaviour for Redstone connectivity and powering. 
         }
         ```
 
-2. Add Stairstone as a dependency
+2. Add Stairstone as a dependency. [See here for versions](https://maven.spiritstudios.dev/#/releases/me/sophur/stairstone).
     ```kotlin
     dependencies {
         implementation("me.sophur:stairstone:<version>")
