@@ -15,24 +15,24 @@ Thanks to [axialeaa](https://github.com/axialeaa) for creating the mod icon, pla
 >
 > This mod is only required on the server, but recommended on the client too. Players without the mod may briefly see the wrong block state when updating a redstone wire, before the server can send the correct block state to the client.
 
-## Redstone blocking
-Slabs and stairs will now block Redstone going up if the bottom or side face in that direction is fully covered
+## Redstone signal cutting
+Slabs and stairs will now cut off Redstone signals going vertically if the bottom or side face in that direction is fully covered
 
 Screenshots:
 <details>
-<summary>Blocking with a slab</summary>
+<summary>Cutting a signal with a slab</summary>
 
 ![A Redstone line unable to connect to the neighbouring Redstone line that is one block up, because a slab is in the way](screenshots/blocking_with_slab.png)
 </details>
 <details>
-<summary>Blocking with stairs</summary>
+<summary>Cutting a signal with stairs</summary>
 
-![A Redstone line going up a block in one direction, the other direction is blocked by a stair block](screenshots/blocking_with_stair.png)
+![A Redstone line going up a block in one direction, the other direction is cut off by a stair block](screenshots/blocking_with_stair.png)
 </details>
 <details>
 <summary>Adjacent Redstone towers</summary>
 
-![Stair Redstone blocking allows two adjacent Redstone towers to be placed next to each other.](screenshots/adjacent_towers.png)
+![Stair Redstone signal cutting allows two adjacent Redstone towers to be placed next to each other.](screenshots/adjacent_towers.png)
 </details>
 
 ## Redstone going downwards
@@ -76,10 +76,10 @@ Screenshots:
 ## Mods and data packs
 ### Block tags
 Mods and data packs can change which blocks affect Redstone connectivity and powering using the following block tags:
-- `stairstone:directional_redstone_connects` (directional blocking and downwards Redstone)
+- `stairstone:directional_redstone_connects` (directional signal cutting and downwards Redstone)
 - `stairstone:directional_redstone_power` (directional powering)
 
-For blocks with these tags, faces of the block are checked for a full face. Redstone is blocked if the bottom face OR the side face is a full face; Redstone is allowed to travel downwards if the side face is a full face; and a Redstone component is powered if both the side facing the component, and the side facing the power source are full faces.
+For blocks with these tags, faces of the block are checked for a full face. Redstone signals are cut if the bottom face OR the side face is a full face; Redstone is allowed to travel downwards if the side face is a full face; and a Redstone component is powered if both the side facing the component, and the side facing the power source are full faces.
 
 ### Mods
 Other mods can specify custom behaviour for Redstone connectivity and powering. Specifically, which sides are treated as a "full face" for the above paragraph.
